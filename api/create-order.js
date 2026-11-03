@@ -14,7 +14,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Customer phone number is required." });
     }
 
-    // Trusted prices: never accept prices directly from the browser.
     const books = {
       1: { title: "The Great Gatsby", price: 100 },
       2: { title: "1984", price: 500 },
@@ -63,7 +62,7 @@ export default async function handler(req, res) {
 
     if (!appId || !secretKey) {
       return res.status(500).json({
-        error: "Cashfree credentials are not configured on the server."
+        error: "Cashfree credentials are not configured."
       });
     }
 
@@ -95,7 +94,7 @@ export default async function handler(req, res) {
           },
           order_meta: {
             return_url:
-              "https://booknest01-jade.vercel.app/payment.html?order_id={order_id}"
+              "https://booknest01-jade.vercel.app/payment-return.html?order_id={order_id}"
           },
           order_note: "BookNest book purchase"
         })
@@ -115,11 +114,12 @@ export default async function handler(req, res) {
       orderId: data.order_id,
       paymentSessionId: data.payment_session_id
     });
+
   } catch (error) {
     console.error("Create order error:", error);
 
     return res.status(500).json({
-      error: error.message || "Unable to create payment order."
+      error: "Unable to create payment order."
     });
   }
 }
