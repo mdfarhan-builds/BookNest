@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNest - Online Bookstore</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="BookNest Logo">
+            <span class="logo-text">BookNest</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Search and Sort -->
+    <div class="search-sort-bar">
+        <input type="text" id="search" placeholder="Search books..." />
+        <select id="sort">
+            <option value="">Sort by</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+        </select>
+    </div>
+
+    <!-- Book List -->
+    <section id="books" class="book-list">
+        <!-- Books will be loaded dynamically -->
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

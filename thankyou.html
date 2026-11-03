@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thank You | BookNest</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .message {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+    }
+    h1 {
+      color: #28a745;
+      margin-bottom: 15px;
+    }
+    p {
+      color: #555;
+      font-size: 1.1rem;
+    }
+    .download-link {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #2a52be;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .download-link:hover {
+      background-color: #2048a3;
+    }
+    .home-link {
+      display: block;
+      margin-top: 15px;
+      color: #2a52be;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="message">
+    <h1>Thank you for your purchase!</h1>
+    <p>Your payment was successful. Your book(s) are ready to download.</p>
+    <div id="downloadButtons"></div>
+    <a href="index.html" class="home-link">Go back to Home</a>
+  </div>
+
+<script>
+  // Get purchased books from localStorage
+  const purchasedBooks = JSON.parse(localStorage.getItem('purchasedBooks')) || [];
+
+  // Function to sanitize file name (remove spaces + lowercase)
+  function sanitizeFileName(title) {
+    return title.toLowerCase().replace(/\s+/g, '') + '.pdf';
+  }
+
+  const container = document.getElementById('downloadButtons');
+
+  if (purchasedBooks.length > 0) {
+    purchasedBooks.forEach(book => {
+      const fileName = sanitizeFileName(book.title);
+      const link = document.createElement('a');
+      link.href = 'pdf/' + fileName;
+      link.download = book.title + '.pdf';
+      link.className = 'download-link';
+      link.textContent = `Download ${book.title}`;
+      container.appendChild(link);
+    });
+  } else {
+    container.innerHTML = "<p>No purchased books found.</p>";
+  }
+
+  // Auto-download all purchased books
+  window.onload = function () {
+    purchasedBooks.forEach(book => {
+      const link = document.createElement('a');
+      link.href = 'pdf/' + sanitizeFileName(book.title);
+      link.download = book.title + '.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+
+    // Clear purchase record after download
+    localStorage.removeItem('purchasedBooks');
+  };
+</script>
+
+</body>
+</html>

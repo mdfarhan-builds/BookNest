@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cart | BookNest</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    margin: 0;
+    padding: 32px;
+}
+
+h1 {
+    text-align: center;
+    color: #130cb7;
+    font-size: 2.3rem;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+#cart-items {
+    max-width: 620px;
+    margin: 24px auto;
+    background: rgba(255,255,255,0.23);
+    padding: 32px;
+    border-radius: 18px;
+    box-shadow: 0 8px 36px 0 rgba(31,38,135,0.21);
+    backdrop-filter: blur(6px);
+    min-height: 220px;
+    transition: box-shadow 0.2s;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+    border-bottom: 1px solid #e3e3ea;
+    background: rgba(255,255,255,0.30);
+    border-radius: 11px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(31,38,135,0.08);
+    animation: fadeInCart 0.3s;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item span {
+    flex: 1;
+    font-size: 1.07rem;
+    color: #24386d;
+    font-weight: 500;
+    padding: 0 8px;
+}
+
+.remove-btn {
+    background: linear-gradient(90deg,#fa5252,#ffadad);
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 0.98rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(255,82,82,0.12);
+    transition: background 0.3s, transform 0.2s;
+}
+
+.remove-btn:hover {
+    background: linear-gradient(90deg,#ffadad,#fa5252);
+    transform: scale(1.05);
+}
+
+#total-price {
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin-top: 20px;
+    text-align: right;
+    color: #130cb7;
+    letter-spacing: 1px;
+}
+
+#buyNowBtn {
+    display: block;
+    background: linear-gradient(90deg, #52e5e7, #130cb7);
+    color: #fff;
+    border: none;
+    padding: 14px 32px;
+    font-size: 1.18rem;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 38px auto 0 auto;
+    max-width: 230px;
+    font-weight: 500;
+    box-shadow: 0 3px 18px rgba(16,38,135,0.13);
+    transition: background 0.3s, transform 0.2s;
+}
+
+#buyNowBtn:disabled {
+    background: #c1c4cb;
+    cursor: not-allowed;
+    color: #888;
+    box-shadow: none;
+}
+
+#buyNowBtn:hover:enabled {
+    background: linear-gradient(90deg, #130cb7, #52e5e7);
+    transform: scale(1.06);
+}
+
+.popup {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg,#52e5e7,#130cb7);
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 13px;
+    box-shadow: 0 7px 22px rgba(31,38,135,0.18);
+    font-size: 1.15rem;
+    font-weight: 600;
+    z-index: 1000;
+    display: none;
+    animation: fadeInUp 0.6s;
+}
+
+@keyframes fadeInCart {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 800px) {
+    #cart-items {
+        padding: 16px;
+        border-radius: 12px;
+    }
+    h1 { font-size: 1.5rem; }
+    #buyNowBtn { padding: 12px 18px; font-size: 1rem; border-radius: 8px; }
+    .popup { padding: 12px 16px; font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<h1>Your Cart</h1>
+<div id="cart-items">
+    Loading cart items...
+</div>
+<p id="total-price">Total: ₹0</p>
+<button id="buyNowBtn">Buy Now</button>
+<div class="popup" id="popupMsg"></div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartItemsDiv = document.getElementById('cart-items');
+const totalPriceEl = document.getElementById('total-price');
+const buyNowBtn = document.getElementById('buyNowBtn');
+const popupMsg = document.getElementById('popupMsg');
+
+// Function to show popup message
+function showPopup(message) {
+    popupMsg.textContent = message;
+    popupMsg.style.display = 'block';
+    setTimeout(() => {
+        popupMsg.style.display = 'none';
+    }, 2200);
+}
+
+// Function to render the cart items
+function renderCart() {
+    if (cart.length === 0) {
+        cartItemsDiv.innerHTML = '<p style="text-align:center;color:#fa5252;">Your cart is empty. Please add some books.</p>';
+        totalPriceEl.textContent = 'Total: ₹0';
+        buyNowBtn.disabled = true;
+        return;
+    }
+    buyNowBtn.disabled = false;
+    let html = '';
+    let total = 0;
+    cart.forEach((item, index) => {
+        html += `
+            <div class="cart-item">
+                <span>${item.title}</span>
+                <span>₹${item.price}</span>
+                <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+            </div>
+        `;
+        total += item.price;
+    });
+    cartItemsDiv.innerHTML = html;
+    totalPriceEl.textContent = 'Total: ₹' + total;
+}
+
+// Function to remove item from cart by index
+window.removeItem = function(index) {
+    if (index > -1 && index < cart.length) {
+        cart.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        showPopup('Removed from cart!');
+        renderCart();
+    }
+}
+
+// Bind Buy Now button to redirect to payment page if cart not empty
+buyNowBtn.addEventListener('click', () => {
+    if (cart.length === 0) {
+        showPopup("Your cart is empty! Please add some books.");
+        return;
+    }
+    showPopup("Redirecting to payment...");
+    setTimeout(() => {
+        window.location.href = 'payment.html';
+    }, 1500);
+});
+
+// Initial render on page load
+renderCart();
+</script>
+
+</body>
+</html>

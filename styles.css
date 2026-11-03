@@ -1,0 +1,287 @@
+/* ====== Global Styles ====== */
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    margin: 0;
+    padding: 0;
+}
+
+/* ====== Header ====== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 36px;
+    background: linear-gradient(90deg, #e0eafc 35%, #cfdef3 100%);
+    color: #2a2d4e;
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.11);
+    border-radius: 0 0 22px 22px;
+    min-height: 78px;
+    margin-bottom: 16px;
+}
+
+/* ====== Search & Sort Bar ====== */
+.search-sort-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    margin: 26px auto 6px auto;
+    width: 90%;
+    max-width: 900px;
+}
+
+.search-sort-bar input[type="text"] {
+    width: 420px;
+    padding: 12px 18px;
+    font-size: 1.12rem;
+    border: none;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.94);
+    box-shadow: 0 3px 16px rgba(16,38,135,0.08);
+    outline: none;
+    transition: box-shadow 0.2s, background 0.2s;
+    margin-right: 10px;
+}
+
+.search-sort-bar input[type="text"]:focus {
+    background: #e0eafc;
+    box-shadow: 0 3px 22px rgba(52,86,223,0.13);
+}
+
+.search-sort-bar select {
+    padding: 12px 24px;
+    font-size: 1.11rem;
+    border: none;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.94);
+    box-shadow: 0 3px 16px rgba(16,38,135,0.09);
+    outline: none;
+    transition: box-shadow 0.2s, background 0.2s;
+}
+
+.search-sort-bar select:focus {
+    background: #e0eafc;
+    box-shadow: 0 3px 22px rgba(52,86,223,0.13);
+}
+
+/* ====== Logo ====== */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.logo img {
+    width: 58px;
+    height: 58px;
+    border-radius: 12px;
+    object-fit: cover;
+    margin-right: 9px;
+    box-shadow: 0px 2px 10px rgba(90,136,255,0.09);
+}
+
+.logo-text {
+    font-size: 2.1rem;
+    font-weight: 700;
+    letter-spacing: 1.3px;
+    color: #130cb7;
+    padding-top: 2px;
+}
+
+/* ====== Navigation ====== */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #24386d;
+    font-size: 1.15rem;
+    font-weight: 500;
+    position: relative;
+    padding: 8px 12px;
+    transition: background 0.3s, color 0.3s, box-shadow 0.2s;
+    border-radius: 8px;
+}
+
+nav ul li a::after {
+    content: '';
+    display: block;
+    margin: 0 auto;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg,#52e5e7,#130cb7);
+    transition: width 0.4s;
+}
+
+nav ul li a:hover {
+    background: linear-gradient(90deg, #e0eafc 60%, #52e5e7 100%);
+    color: #130cb7;
+    box-shadow: 0 2px 8px rgba(16,38,135,0.10);
+}
+
+nav ul li a:hover::after {
+    width: 80%;
+}
+
+/* ====== Book List Grid ====== */
+.book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    max-width: 1400px;
+    margin: auto;
+}
+
+/* ====== Book Card ====== */
+.book {
+    background: rgba(255,255,255,0.25);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+    text-align: center;
+    backdrop-filter: blur(4px);
+    padding: 20px;
+    transition: transform 0.2s;
+}
+
+.book:hover {
+    transform: scale(1.04);
+    box-shadow: 0 12px 48px 0 rgba(16,38,135,0.19);
+}
+
+.book img {
+    width: 130px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 14px;
+}
+
+.book h3 {
+    font-size: 19px;
+    margin: 12px 0;
+    font-weight: bold;
+    color: #130cb7;
+    letter-spacing: 1px;
+}
+
+.book p {
+    font-size: 15px;
+    color: #24386d;
+}
+
+.book button {
+    background: linear-gradient(90deg,#52e5e7,#130cb7);
+    color: #fff;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(16,38,135,0.17);
+    transition: background 0.3s, transform 0.2s;
+}
+
+.book button:hover {
+    background: linear-gradient(90deg,#130cb7,#52e5e7);
+    transform: translateY(-2px) scale(1.08);
+}
+
+/* ====== Popup ====== */
+.popup {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg,#52e5e7,#130cb7);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 11px;
+    box-shadow: 0 6px 20px rgba(31,38,135,0.15);
+    display: none;
+    font-size: 18px;
+    z-index: 1000;
+    animation: fadeInUp 0.6s;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ====== Responsive Design ====== */
+
+/* Large Screens - 4 books per row */
+@media (min-width: 1025px) {
+    .book-list {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+}
+
+/* Tablets - 3 books per row */
+@media (max-width: 1024px) and (min-width: 601px) {
+    .book-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Phones - 2 books per row */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        min-height: 62px;
+        padding: 10px 14px;
+    }
+
+    .logo img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .logo-text {
+        font-size: 1.4rem;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 14px;
+    }
+
+    nav ul li a {
+        font-size: 0.95rem;
+        padding: 6px 8px;
+    }
+
+    .book-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        padding: 10px;
+    }
+
+    .book img {
+        width: 100px;
+        height: 140px;
+    }
+
+    .book h3 {
+        font-size: 15px;
+    }
+
+    .book p {
+        font-size: 13px;
+    }
+
+    .book button {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+}
