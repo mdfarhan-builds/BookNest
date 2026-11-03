@@ -69,7 +69,7 @@ export default async function handler(req, res) {
     const orderId = `bn_${crypto.randomUUID().replace(/-/g, "")}`;
 
     const response = await fetch(
-      "https://sandbox.cashfree.com/pg/orders",
+      "https://api.cashfree.com/pg/orders",
       {
         method: "POST",
         headers: {

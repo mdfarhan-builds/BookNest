@@ -27,7 +27,7 @@ export default async function handler(req, res) {
     }
 
     const response = await fetch(
-      `https://sandbox.cashfree.com/pg/orders/${encodeURIComponent(orderId)}`,
+      `https://api.cashfree.com/pg/orders/${encodeURIComponent(orderId)}`,
       {
         method: "GET",
         headers: {
